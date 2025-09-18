@@ -11,6 +11,7 @@ Un scraper automatizado para extraer y almacenar información de ofertas laboral
 ## 🚀 Características Principales
 
 - **Extracción Automatizada**: Navega por Computrabajo y extrae ofertas de empleo de manera automática.
+- **Búsquedas desde archivo JSON**: Lee los términos de búsqueda desde `src/utils/ofertas.json` y realiza el scraping para cada uno de ellos.
 - **Almacenamiento en Base de Datos**: Guarda los datos en una base de datos MySQL con modelos relacionales para búsquedas, empleos, requisitos y habilidades.
 - **Configuración Flexible**: Soporta variables de entorno para personalizar la URL base, credenciales de base de datos y opciones del navegador.
 - **Manejo de Fechas**: Convierte fechas relativas (ej. "Hace 7 horas") a formatos estándar para almacenamiento consistente.
@@ -47,6 +48,24 @@ Un scraper automatizado para extraer y almacenar información de ofertas laboral
 
 4. Asegúrate de que MySQL esté ejecutándose y crea la base de datos especificada.
 
+## 📑 Configuración de Términos de Búsqueda
+
+Agrega o edita los términos de búsqueda en el archivo `src/utils/ofertas.json`.  
+Ejemplo de estructura:
+
+```json
+{
+  "ofertas_laborales_2025_colombia": [
+    "Desarrollador de Software",
+    "Analista de Datos",
+    "Científico de Datos"
+    // ...agrega más términos aquí
+  ]
+}
+```
+
+El scraper recorrerá automáticamente cada término y realizará el scraping correspondiente.
+
 ## 🚀 Uso
 
 Para ejecutar el scraper en modo desarrollo:
@@ -57,8 +76,9 @@ npm run dev
 
 Esto iniciará el proceso de scraping:
 - Sincroniza la base de datos automáticamente.
+- Lee los términos de búsqueda desde `src/utils/ofertas.json`.
 - Abre un navegador y navega a Computrabajo.
-- Realiza una búsqueda por defecto de "desarrollo Web".
+- Realiza una búsqueda por cada término del archivo JSON.
 - Extrae información detallada de las ofertas encontradas.
 - Almacena los datos en la base de datos MySQL.
 - Muestra los resultados en formato JSON en la consola.
@@ -126,7 +146,8 @@ computrabajo-scraper/
 │   │   └── env.ts               # Variables de entorno
 │   └── utils/
 │       ├── dateParser.ts        # Utilidades para conversión de fechas
-│       └── helpers.ts           # Funciones auxiliares
+│       ├── helpers.ts           # Funciones auxiliares
+│       └── ofertas.json         # Términos de búsqueda para scraping
 ├── package.json                 # Dependencias y scripts
 ├── tsconfig.json                # Configuración de TypeScript
 ├── .env                         # Variables de entorno (no versionado)
@@ -177,7 +198,7 @@ computrabajo-scraper/
 
 ## 📝 Notas Adicionales
 
-- El scraper extrae actualmente ofertas de "desarrollo Web" por defecto. Modifica la variable `busqueda` en `gestion.ts` para cambiar el término de búsqueda.
+- El scraper extrae actualmente ofertas para cada término definido en `src/utils/ofertas.json`. Modifica este archivo para personalizar tus búsquedas.
 - Para un rendimiento óptimo, ejecuta en un entorno con buena conectividad y recursos suficientes.
 - Monitorea el uso de memoria, ya que Puppeteer puede consumir recursos significativos durante operaciones prolongadas.
 
