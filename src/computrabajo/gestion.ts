@@ -2,9 +2,7 @@ import { createBrowser } from "../config/browser.js";
 import { COMPUTRABAJO_URL } from "../config/env.js";
 import { convertirFecha } from "../utils/dateParser.js";
 import { timeOut } from "../utils/helpers.js";
-import { syncDatabase, Search, Job, Requirement, Skill } from "./db.js";
-
-// ✅ Importar función
+import { Job, Requirement, Search, Skill, syncDatabase } from "./db.js";
 
 export async function scrapeComputrabajo() {
   // Sincronizar base de datos
